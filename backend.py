@@ -1,15 +1,11 @@
-from json import load
-from dotenv import load_dotenv
-import os
 import requests
 from datetime import datetime
-
+from streamlit import secrets
 
 def get_data(place, fc_days, kind):
-    
-    load_dotenv()
-    api_key = os.getenv("WAEATHER_API_KEY")
 
+    api_key = secrets["api_keys"]["WAEATHER_API_KEY"]
+    
     url = f"https://api.openweathermap.org/data/2.5/forecast?q={place}&units=metric&appid={api_key}"
     response = requests.get(url)
     content = response.json()

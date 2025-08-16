@@ -4,3 +4,4 @@ App_Design.png
 __pycache__/backend.cpython-313.pyc
 __pycache__/main.cpython-313.pyc
 test.ipynb
+.streamlit
