@@ -17,9 +17,9 @@ option = st.selectbox("Select a data to view", ("Tempurature", "Sky"))
 match option:
     case "Tempurature":
         data = get_data(city, days, option)
-        dates = data[0]
-        tempuratures = data[1]
+        dates = data[0] #type:ignore
+        tempuratures = data[1] #type:ignore 
 
         st.subheader(f"Tempurature for the next {days} days in {city}")
-        figure = px.line(x=dates[0:int(days)*8], y=tempuratures[0:int(days)*8], labels={"x": "Date", "y": "Tempuratrue (c)"})
+        figure = px.line(x=dates, y=tempuratures, labels={"x": "Date", "y": "Tempuratrue (c)"})
         st.plotly_chart(figure)
