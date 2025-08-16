@@ -1,12 +1,8 @@
 from json import load
-import math
-from urllib import request
 from dotenv import load_dotenv
 import os
-from numpy import require
 import requests
 from datetime import datetime
-
 
 
 def get_data(place, fc_days, kind):
@@ -17,18 +13,25 @@ def get_data(place, fc_days, kind):
     url = f"https://api.openweathermap.org/data/2.5/forecast?q={place}&units=metric&appid={api_key}"
     response = requests.get(url)
     content = response.json()
-    match kind:
-        case "Tempurature":
-            listed = content["list"]
-            main_data = [i["main"] for i in listed]
-            tempuratures = [i["temp"] for i in main_data][0:int(fc_days)*5]
-            dates = [datetime.utcfromtimestamp(i["dt"]) for i in listed][0:int(fc_days)*5]
-            
-            return dates, tempuratures
+    
+    listed = content["list"][0:int(fc_days)*8]
+    dates = [datetime.fromtimestamp(i["dt"]) for i in listed]
+    
+
+    if kind == "Tempurature":
         
-        case "Sky":
-            pass
+        main_data = [i["main"] for i in listed]
+        tempuratures = [i["temp"] for i in main_data]
+        
+        return dates, tempuratures
+    
+    if kind == "Sky":
+        
+        weather = [i["weather"] for i in listed]
+        sky_status = [i[0]["main"] for i in weather]
+        sky_description = [i[0]["description"] for i in weather]
+        return dates, sky_status, sky_description
 
 
 if __name__ == "__main__":
-    get_data(place="Tokyo",fc_days=3,kind="Tempurature")
+    get_data(place="Tokyo",fc_days=3,kind="Sky")

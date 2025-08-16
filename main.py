@@ -1,4 +1,5 @@
-import math
+from altair import Column
+from narwhals import col
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -13,13 +14,22 @@ days = st.slider("Forecast Days", max_value=5, min_value=1,
 option = st.selectbox("Select a data to view", ("Tempurature", "Sky"))
 
 
+if option == "Tempurature":
+    data = get_data(city, days, option)
+    dates = data[0] #type:ignore
 
-match option:
-    case "Tempurature":
-        data = get_data(city, days, option)
-        dates = data[0] #type:ignore
-        tempuratures = data[1] #type:ignore 
+    tempuratures = data[1] #type:ignore 
+    st.subheader(f"Tempurature for the next {days} days in {city}")
+    figure = px.line(x=dates, y=tempuratures, labels={"x": "Date", "y": "Tempuratrue (c)"})
+    st.plotly_chart(figure)
 
-        st.subheader(f"Tempurature for the next {days} days in {city}")
-        figure = px.line(x=dates, y=tempuratures, labels={"x": "Date", "y": "Tempuratrue (c)"})
-        st.plotly_chart(figure)
+
+else:
+    
+    data = get_data(city, days, option)
+    dates = data[0] #type:ignore
+    sky_status = data[1] #type:ignore
+    sky_description = data[2] #type:ignore
+
+    
+    print(sky_status)
