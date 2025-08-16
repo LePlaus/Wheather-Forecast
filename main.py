@@ -3,7 +3,7 @@ import plotly.express as px
 from backend import get_data
 
 
-st.title("Weather Forcast for The Next Days")
+st.title("Weather Forecast for The Next Days")
 
 city = st.text_input("Enter a City: ", key="city")
 days = st.slider("Forecast Days:", max_value=5, min_value=1,
