@@ -7,7 +7,7 @@ st.title("Weather Forecast for The Next Days")
 
 city = st.text_input("Enter a City: ", key="city")
 days = st.slider("Forecast Days:", max_value=5, min_value=1,
-                 help="Select the muber of days you want to forecast.")
+                 help="Select the number of days you want to forecast.")
 option = st.selectbox("Select a data to view", ("Tempurature", "Sky"))
 
 if city:
